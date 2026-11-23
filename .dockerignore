@@ -1,0 +1,10 @@
+.git
+.gitignore
+.env
+data
+node_modules
+.svelte-kit
+static
+npm-debug.log*
+README.md
+.deploy.example.yml

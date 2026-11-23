@@ -1,0 +1,17 @@
+services:
+  calendar:
+    build: .
+    image: tma-calendar:local
+    container_name: tma-calendar
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "${BIND_ADDR:-127.0.0.1}:${PORT:-3000}:3000"
+    volumes:
+      - calendar-data:/data
+    environment:
+      DATA_DIR: /data
+      FILES_DIR: /data/files
+
+volumes:
+  calendar-data:

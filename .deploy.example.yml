@@ -1,0 +1,6 @@
+image: tma-calendar:local
+remoteDocker:
+  sshHost: <server-user>@<server-ip>
+  pemPath: /home/you/.ssh/<key>.pem
+  composePath: /home/<server-user>/calendar
+  serverUrl: https://calendar.example.com
