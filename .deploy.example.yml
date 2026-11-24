@@ -1,6 +1,12 @@
+# Скопируйте в .deploy.yml (файл в .gitignore) и заполните значения.
+# Образ собирается локально (npm run build + docker build) и передаётся по SSH.
+
 image: tma-calendar:local
+
 remoteDocker:
   sshHost: <server-user>@<server-ip>
+  # Путь к приватному ключу; оставьте пустым, если используется ssh-agent / ~/.ssh/config.
   pemPath: /home/you/.ssh/<key>.pem
+  # Каталог на сервере, где лежат docker-compose.yml и .env.
   composePath: /home/<server-user>/calendar
   serverUrl: https://calendar.example.com

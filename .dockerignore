@@ -4,7 +4,15 @@
 data
 node_modules
 .svelte-kit
-static
 npm-debug.log*
 README.md
 .deploy.example.yml
+.deploy.yml
+
+# Python
+__pycache__
+*.py[cod]
+.venv
+.pytest_cache
+.mypy_cache
+.ruff_cache

@@ -1,12 +1,12 @@
 <script>
   import { onMount } from 'svelte';
   import '../app.css';
-  import { start } from '#lib/stores/tasks.js';
-  import { initTelegram, tg } from '#lib/telegram.js';
+  import { bootstrap } from '#lib/stores/app.js';
+  import { initTelegram } from '#lib/telegram.js';
 
-  onMount(() => {
-    initTelegram();
-    start(tg);
+  onMount(async () => {
+    const tg = await initTelegram();
+    await bootstrap(tg);
   });
 </script>
 

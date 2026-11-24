@@ -6,7 +6,7 @@ import { defineConfig } from 'vite';
  * SvelteKit 3: конфигурация передаётся в Vite-плагин (svelte.config.js больше не нужен).
  *
  * Сборка — в чистую статику (static/): приложение одноэкранное и работает
- * в браузере Telegram, поэтому server/ просто раздаёт эти файлы.
+ * в браузере Telegram, поэтому FastAPI просто раздаёт эти файлы.
  * prerender нужен, чтобы в index.html попал стартовый HTML и загрузился клиент;
  * router.resolution: 'client' — SvelteKit не ходит на сервер за маршрутами.
  */
@@ -16,7 +16,6 @@ export default defineConfig({
       adapter: adapter({
         pages: 'static',
         assets: 'static',
-        fallback: 'index.html',
         strict: false,
       }),
       paths: { relative: false },
@@ -27,7 +26,8 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      '/api': 'http://localhost:3000',
+      '/api': 'http://localhost:8000',
+      '/uploads': 'http://localhost:8000',
     },
   },
 });

@@ -3,4 +3,13 @@ node_modules/
 static/
 data/
 .env
+.deploy.yml
 *.log
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/

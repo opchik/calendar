@@ -1,15 +1,18 @@
 #!/usr/bin/env bash
 # Публикует локальный образ на удалённый сервер и перезапускает контейнер.
-# Требуется: docker, ssh, node; на сервере — docker + docker compose v2.
+# Требуется: docker, ssh, python3; на сервере — docker + docker compose v2,
+# а также каталог composePath с docker-compose.yml и .env.
 # Параметры берутся из .deploy.yml (пример — .deploy.example.yml).
 set -euo pipefail
 
 cd "$(dirname "$0")"
 
 command -v docker >/dev/null || { echo "docker не установлен"; exit 1; }
+command -v npm >/dev/null || { echo "npm не установлен (нужен для сборки фронтенда)"; exit 1; }
+command -v python3 >/dev/null || { echo "python3 не установлен"; exit 1; }
 [ -f .deploy.yml ] || { echo "Нет .deploy.yml — скопируйте .deploy.example.yml"; exit 1; }
 
-get() { node scripts/yaml-get.mjs "$1" .deploy.yml; }
+get() { python3 scripts/yaml_get.py "$1" .deploy.yml; }
 
 IMAGE="$(get image)"
 SSH_HOST="$(get remoteDocker.sshHost)"
@@ -24,6 +27,10 @@ SERVER_URL="$(get remoteDocker.serverUrl || true)"
 
 ssh_cmd=(ssh -o StrictHostKeyChecking=accept-new)
 [ -n "$PEM" ] && ssh_cmd+=(-i "$PEM")
+
+echo "→ Сборка фронтенда"
+npm ci --no-audit --no-fund
+npm run build
 
 echo "→ Сборка образа $IMAGE"
 docker build -t "$IMAGE" .
